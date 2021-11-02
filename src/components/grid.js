@@ -30,7 +30,6 @@ const Grid = ( ) => {
               <div
                 className="hover:bg-red-100 border h-20 w-20 text-center p-5"
                 onClick={handleTurnClick(i, j)}
-                
                 key={`row_col_${i}_${j}`}
               >
                 {col || ""}
