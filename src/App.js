@@ -1,14 +1,10 @@
-import Grid from './components/grid'
-
+import TicTacToe from './components/TicTacToe'
 
 function App() {
 
   return (
-    <div className="w-screen bg-blue-500 ">
-      <h1> Welcome to my game ! </h1>
-    <div className="flex flex-col items-center justify-center">
-    <Grid  />
-    </div>
+    <div className="bg-gray-900 flex flex-col items-center w-screen">
+    <TicTacToe />
     </div>
   );
 }
