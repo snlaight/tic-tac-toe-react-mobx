@@ -110,7 +110,7 @@ const TicTacToe = () => {
 
     //handle undefined index errors
     const [_, rowIndex, colIndex] = id.split("-");
-
+console.log(_)
     //keep a copy of the old board positions in memory (this neeeds to be updated for performace reasons, there has to be a better way to handle this with MOBX ????)
     const newBoard = [...board];
     newBoard[+rowIndex][+colIndex] = player;
