@@ -1,5 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
+const Swal = require("sweetalert2");
 
 const TicTacToe = () => {
   const initialScore = {
@@ -8,8 +9,7 @@ const TicTacToe = () => {
   };
   //HOW TO HANDLE THESE WITH MOBX ??? REACT STATE HOOKS ARE EASY.
 
-
-//set the starting and player turn.
+  //set the starting and player turn.
   const [player, setPlayer] = useState("o");
   //used to update the game status when there is a matching result
   const [status, setStatus] = useState("");
@@ -73,6 +73,7 @@ const TicTacToe = () => {
     if (currentPlayerContainer.inverseDiagonal.every((value) => value === 1)) {
       return true;
     }
+
     return false;
   };
 
@@ -91,13 +92,23 @@ const TicTacToe = () => {
     if (checkWinner()) {
       setStatus("won");
       updateScore();
-
+      Swal.fire({
+        title: `Game over!`,
+        text: `The winner is ${player}`,
+        icon: "success",
+        confirmButtonText: "Reset Game",
+      }).then((game) => resetGame());
       return;
     }
 
     if (checkDraw()) {
       setStatus("draw");
-
+      Swal.fire({
+        title: `Game over!`,
+        text: `We have a draw !`,
+        icon: "warning",
+        confirmButtonText: "Reset Game",
+      }).then((game) => resetGame());
       return;
     }
 
@@ -110,7 +121,7 @@ const TicTacToe = () => {
 
     //handle undefined index errors
     const [_, rowIndex, colIndex] = id.split("-");
-console.log(_)
+    console.log(_);
     //keep a copy of the old board positions in memory (this neeeds to be updated for performace reasons, there has to be a better way to handle this with MOBX ????)
     const newBoard = [...board];
     newBoard[+rowIndex][+colIndex] = player;
@@ -139,26 +150,6 @@ console.log(_)
     updateGame();
   };
 
-  const renderNewGame = (e) => {
-    resetGame();
-  };
-  //this will be replaced by sweetAlert, merely in for functionality. Swwet alert will have the option to reset the board.
-  const renderStatusOverlay = () => {
-    if (status === "") return;
-    let message = "";
-    if (status === "draw") {
-      message = "Draw";
-    }
-    if (status === "won") {
-      message = `${player} won!`;
-    }
-    return (
-      <div className="absolute inset-0 w-full h-full font-bold text-3xl flex items-center justify-center bg-gray-600">
-        <p className="break-words"> {message} </p>
-      </div>
-    );
-  };
-
   const renderPlayerScore = (player) => {
     return (
       <>
@@ -170,8 +161,11 @@ console.log(_)
 
   /// this renders the game board and logic --- ideally it will be deconstructed and built in a separate component that receives the grid size from start screen.
   const renderBoard = () => {
+    let gridSize = 3;
     return (
-      <div className="h-full w-full bg-gray-300 text-black grid grid-cols-3 grid-rows-3">
+      <div
+        className={`h-full w-full bg-gray-300 text-black grid grid-cols-${gridSize} grid-rows-${gridSize}`}
+      >
         {board.map((row, rowIndex) =>
           row.map((cell, colIndex) => (
             <div
@@ -199,19 +193,11 @@ console.log(_)
         <div className=" flex flex-row flex-wrap justify-between items-center w-full">
           <div className="hidden md:block">{renderPlayerScore("o")}</div>
           <div className="relative mx-0 md:mx-4 w-96 h-96 border border-gray-100 mb-10 md:mb-0">
-            {renderStatusOverlay()}
             {renderBoard()}
           </div>
           <div className="block md:hidden">{renderPlayerScore("o")}</div>
           <div> {renderPlayerScore("x")}</div>
         </div>
-        <button
-          onClick={(e) => renderNewGame(e)}
-          className="bg-gray-500 btn-sm hover:bg-gray-400 text-white font-bold m-5 py-2 px-4 border-b-4 border-gray-700 hover:border-gray-500 rounded"
-        >
-          {" "}
-          Reset Game
-        </button>
       </section>
     </div>
   );
