@@ -16,7 +16,7 @@ const TicTacToe = () => {
   //this saves the player moves to check for winning logic
   const [containers, setContainers] = useState("");
 /// this will set the grid size and arrays to check against
-  const [grid, setGrid]= useState(5)
+  const [grid, setGrid]= useState(3)
   //self explanatory -- set the initial score of the game
   const [score, setScore] = useState(initialScore);
   /// set the game board.
