@@ -15,6 +15,8 @@ const TicTacToe = () => {
   const [status, setStatus] = useState("");
   //this saves the player moves to check for winning logic
   const [containers, setContainers] = useState("");
+/// this will set the grid size and arrays to check against
+  const [grid, setGrid]= useState(5)
   //self explanatory -- set the initial score of the game
   const [score, setScore] = useState(initialScore);
   /// set the game board.
@@ -22,23 +24,19 @@ const TicTacToe = () => {
 
   const resetGame = () => {
     ///this sets it to 3x3 by default, need to improve on generate grid function so it goes hand in hand with algorithm.
-    setBoard([
-      ["", "", ""],
-      ["", "", ""],
-      ["", "", ""],
-    ]);
+    setBoard(Array(grid).fill(null).map((_)=> Array(grid).fill("")));
     setContainers({
       x: {
-        rows: Array(3).fill(0),
-        columns: Array(3).fill(0),
-        diagonal: Array(3).fill(0),
-        inverseDiagonal: Array(3).fill(0),
+        rows: Array(grid).fill(0),
+        columns: Array(grid).fill(0),
+        diagonal: Array(grid).fill(0),
+        inverseDiagonal: Array(grid).fill(0),
       },
       o: {
-        rows: Array(3).fill(0),
-        columns: Array(3).fill(0),
-        diagonal: Array(3).fill(0),
-        inverseDiagonal: Array(3).fill(0),
+        rows: Array(grid).fill(0),
+        columns: Array(grid).fill(0),
+        diagonal: Array(grid).fill(0),
+        inverseDiagonal: Array(grid).fill(0),
       },
     });
     setPlayer("o");
@@ -57,11 +55,11 @@ const TicTacToe = () => {
     const currentPlayerContainer = containers[player];
 
     //check rows
-    if (currentPlayerContainer.rows.some((value) => value === 3)) {
+    if (currentPlayerContainer.rows.every((value) => value === 1)) {
       return true;
     }
     //check verticals
-    if (currentPlayerContainer.columns.some((value) => value === 3)) {
+    if (currentPlayerContainer.columns.every((value) => value === 1)) {
       return true;
     }
     //check diagonal
@@ -119,9 +117,8 @@ const TicTacToe = () => {
     //assign unique id to each event
     const { id } = e.target;
 
-    //handle undefined index errors
+    //handle undefined index errors, assign the value "Grid-[rowIndex]-[colIndex] to each grid position. IE- first topleft grid position will be Grid-0-0, etc etc etc."
     const [_, rowIndex, colIndex] = id.split("-");
-    console.log(_);
     //keep a copy of the old board positions in memory (this neeeds to be updated for performace reasons, there has to be a better way to handle this with MOBX ????)
     const newBoard = [...board];
     newBoard[+rowIndex][+colIndex] = player;
@@ -161,20 +158,19 @@ const TicTacToe = () => {
 
   /// this renders the game board and logic --- ideally it will be deconstructed and built in a separate component that receives the grid size from start screen.
   const renderBoard = () => {
-    let gridSize = 3;
     return (
       <div
-        className={`h-full w-full bg-gray-300 text-black grid grid-cols-${gridSize} grid-rows-${gridSize}`}
+        className={`h-full w-full bg-gray-300 text-black grid grid-cols-${grid} grid-rows-${grid}`}
       >
         {board.map((row, rowIndex) =>
           row.map((cell, colIndex) => (
             <div
-              className="border flex justify-center items-center"
+              className="border border-gray-900 flex justify-center items-center"
               key={`cell-${rowIndex}-${colIndex}`}
               id={`cell-${rowIndex}-${colIndex}`}
               onClick={(e) => handleCellClick(e, rowIndex, colIndex)}
               role="button"
-              tabIndex={3 * rowIndex * colIndex}
+              tabIndex={grid * rowIndex * colIndex}
             >
               {cell !== "" && (
                 <img src={`${cell}.png`} alt={`Grid-${rowIndex}-${colIndex}`} />
@@ -188,11 +184,11 @@ const TicTacToe = () => {
   ///  \/ PAGE RENDERING STARTS BELOW \/ ///
   return (
     <div>
-      <section className="text-white py=16 text-center px-4 md:px-section h-screen flex flex-col justify-center">
+      <section className="text-white py-16 text-center px-4 md:px-section h-screen flex flex-col justify-center">
         <h1 className="font-bold text-3xl mb-5"> TicTacToe </h1>
         <div className=" flex flex-row flex-wrap justify-between items-center w-full">
           <div className="hidden md:block">{renderPlayerScore("o")}</div>
-          <div className="relative mx-0 md:mx-4 w-96 h-96 border border-gray-100 mb-10 md:mb-0">
+          <div className="relative w-96 h-96 border border-gray-100 ">
             {renderBoard()}
           </div>
           <div className="block md:hidden">{renderPlayerScore("o")}</div>
