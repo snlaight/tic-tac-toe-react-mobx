@@ -23,7 +23,6 @@ const TicTacToe = () => {
   const [board, setBoard] = useState([]);
 
   const resetGame = () => {
-    ///this sets it to 3x3 by default, need to improve on generate grid function so it goes hand in hand with algorithm.
     setBoard(Array(grid).fill(null).map((_)=> Array(grid).fill("")));
     setContainers({
       x: {
@@ -46,7 +45,7 @@ const TicTacToe = () => {
   //make sure an empty board renders on reload of the page
   useEffect(() => {
     resetGame();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const checkDraw = () =>
     board.every((row) => row.every((cell) => cell !== ""));
