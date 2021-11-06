@@ -23,7 +23,7 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "rules":{
+    "rules": {
       "no-unused-vars": "off"
     },
     "extends": [
