@@ -46,7 +46,7 @@ const NewGame = observer(({ game }) => {
         <h1 className="font-bold text-3xl mb-5"> TicTacToe </h1>
         <div className="flex flex-row flex-wrap justify-between items-center w-full">
           <div className="hidden md:block">
-            <PlayerAndScore player={game.player} score={game.score["o"]} />
+            <PlayerAndScore player={"Player 1"} score={game.score["o"]} />
           </div>
           <div className="relative mx-1 md:mx-4 w-96 h-96 border border-gray-100 ">
             <Board
@@ -58,9 +58,9 @@ const NewGame = observer(({ game }) => {
             />
           </div>
           <div className="block md:hidden">
-            <PlayerAndScore player={game.player} score={game.score["o"]} />
+            <PlayerAndScore player={"Player 1"} score={game.score["o"]} />
           </div>
-          <PlayerAndScore player={game.player} score={game.score["x"]} />
+         <div> <PlayerAndScore player={"Player 2"} score={game.score["x"]} /> </div>
         </div>
       </section>
     </div>
