@@ -100,22 +100,23 @@ export class Game {
     if (this.checkWinner()) {
       this.status = "won";
       this.updateScore();
-      Swal.fire({
+      return Swal.fire({
         title: `Game over!`,
         text: `The winner is ${this.player}`,
         icon: "success",
         confirmButtonText: "Reset Game"
       }).then((game) => this.resetGame());
+      
     }
     if (this.checkDraw()) {
       this.status = "draw";
-      Swal.fire({
+      return Swal.fire({
         title: `Game over!`,
         text: `We have a draw !`,
         icon: "warning",
         confirmButtonText: "Reset Game"
       }).then((game) => this.resetGame());
-      return;
+      
     }
     this.updatePlayer();
   }
