@@ -1,13 +1,13 @@
-import TicTacToe from "./components/TicTacToe";
+import TicTacToe from "./components/newTicTacComponent";
 import React from "react";
-import NewGame from './components/newTicTacComponent'
+import { Game } from "./components/mobxtest";
 
+const game = new Game();
 
 function App() {
-
   return (
     <div className="bg-gray-900 flex flex-col items-center w-screen">
-      <NewGame />
+      <TicTacToe game={game} />
     </div>
   );
 }
