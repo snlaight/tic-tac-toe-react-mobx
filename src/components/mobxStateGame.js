@@ -1,4 +1,3 @@
-import React from "react";
 import { makeAutoObservable } from "mobx";
 const Swal = require("sweetalert2");
 

@@ -1,6 +1,6 @@
 import TicTacToe from "./components/newTicTacComponent";
 import React from "react";
-import { Game } from "./components/mobxtest";
+import { Game } from "./components/mobxStateGame";
 
 const game = new Game();
 

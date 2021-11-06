@@ -1,7 +1,5 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { useLocalStore, makeObservable, observable } from "mobx";
-import { observer } from "mobx-react";
 
 const Swal = require("sweetalert2");
 

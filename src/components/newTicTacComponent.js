@@ -1,6 +1,7 @@
 import React from "react";
 import { observer } from "mobx-react";
 
+
 const Board = ({ grid, board, handleCellClick }) => {
   return (
     <div
@@ -30,6 +31,8 @@ const Board = ({ grid, board, handleCellClick }) => {
   );
 };
 
+
+///switching rendering player score area to component.
 const PlayerAndScore = ({ score, player }) => {
   return (
     <>
@@ -39,6 +42,8 @@ const PlayerAndScore = ({ score, player }) => {
   );
 };
 
+
+//exporting the new game as a functionable component that is observed by mobx state.
 const NewGame = observer(({ game }) => {
   return (
     <div>
