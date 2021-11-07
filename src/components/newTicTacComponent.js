@@ -2,15 +2,16 @@ import React from "react";
 import { observer } from "mobx-react";
 
 
+
 const Board = ({ grid, board, handleCellClick }) => {
   return (
     <div
-      className={`h-full w-full bg-gray-300 text-black grid grid-cols-${grid} grid-rows-${grid}`}
+      className={`h-96 w-96 bg-gray-300 text-black grid grid-cols-${grid} grid-rows-${grid}`}
     >
       {board.map((row, rowIndex) =>
         row.map((cell, colIndex) => (
           <div
-            className="border flex justify-center items-center"
+            className="border flex justify-center items-center h-full w-full"
             key={`cell-${rowIndex}-${colIndex}`}
             id={`cell-${rowIndex}-${colIndex}`}
             onClick={(e) => handleCellClick(e, rowIndex, colIndex)}
@@ -19,7 +20,7 @@ const Board = ({ grid, board, handleCellClick }) => {
           >
             {cell !== "" && (
               <img
-                className="h-2/5 2/5"
+                className="h-1/3 w-1/3 p-0 m-0"
                 src={`${cell}.png`}
                 alt={`Grid-${rowIndex}-${colIndex}`}
               />
@@ -53,7 +54,7 @@ const NewGame = observer(({ game }) => {
           <div className="hidden md:block">
             <PlayerAndScore player={"Player 1"} score={game.score["o"]} />
           </div>
-          <div className="relative mx-1 md:mx-4 w-96 h-96 border border-gray-100 ">
+          <div className="relative mx-1 md:mx-4 w-auto h-auto border border-gray-100 ">
             <Board
               grid={game.grid}
               board={game.board}
