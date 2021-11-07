@@ -4,18 +4,37 @@ const Swal = require("sweetalert2");
 export class Game {
   initialScore = {
     x: 0,
-    o: 0
+    o: 0,
   };
   player = "o";
   status = "";
   board = [];
   containers = "";
-  grid = 3;
+  grid = 0;
+  options = [
+    {value: 0, label: "Choose size"},
+    {value: 3,label: "3x3"},
+    {value: 4,label: "4x4"},
+    {value: 5,label: "5x5"},
+    {value: 6,label: "6x6"},
+    {value: 7,label: "7x7"},
+    {value: 8,label: "8x8"},
+    {value: 9,label: "9x9"},
+    {value: 10,label: "10x10"},
+    {value: 11,label: "11x11"},
+    {value: 12,label: "12x12"},
+  ];
 
   constructor() {
     this.score = this.initialScore;
     this.resetGame();
     makeAutoObservable(this);
+  }
+
+  setSize(e){
+    let newGrid = e.value
+      this.grid = newGrid;
+      this.resetGame()
   }
   resetGame() {
     const grid = this.grid;
@@ -24,14 +43,14 @@ export class Game {
         rows: Array(grid).fill(0),
         columns: Array(grid).fill(0),
         diagonal: Array(grid).fill(0),
-        inverseDiagonal: Array(grid).fill(0)
+        inverseDiagonal: Array(grid).fill(0),
       },
       o: {
         rows: Array(grid).fill(0),
         columns: Array(grid).fill(0),
         diagonal: Array(grid).fill(0),
-        inverseDiagonal: Array(grid).fill(0)
-      }
+        inverseDiagonal: Array(grid).fill(0),
+      },
     };
     this.board = Array(grid)
       .fill(null)
@@ -104,9 +123,8 @@ export class Game {
         title: `Game over!`,
         text: `The winner is ${this.player}`,
         icon: "success",
-        confirmButtonText: "Reset Game"
+        confirmButtonText: "Reset Game",
       }).then((game) => this.resetGame());
-      
     }
     if (this.checkDraw()) {
       this.status = "draw";
@@ -114,9 +132,8 @@ export class Game {
         title: `Game over!`,
         text: `We have a draw !`,
         icon: "warning",
-        confirmButtonText: "Reset Game"
+        confirmButtonText: "Reset Game",
       }).then((game) => this.resetGame());
-      
     }
     this.updatePlayer();
   }
